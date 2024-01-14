@@ -4,7 +4,7 @@ import torch
 import torch.nn.functional as F
 from sentence_transformers import SentenceTransformer
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
             '-t', '--text', type=str, help='Path to text file', required=True, 
@@ -93,7 +93,7 @@ def get_cos(word_emb: torch.Tensor, ph_emb: torch.Tensor) -> list:
         res.append(torch.stack([cos.max(), cos.argmax()]))
     return res
 
-def suggest(model, phrases, text):
+def suggest(model, phrases: list, text: str) -> None:
     '''Prints out the initial text with phrase suggestions and scores.
 
     Keyword arguments:
@@ -158,7 +158,7 @@ def suggest(model, phrases, text):
 if __name__ == '__main__':
     args = parse_args()
     text_file = args.text
-    
+
     with open('data/standardised_terms.txt', 'r') as f:
         phrases = [l[:-1] for l in f.readlines()]
 
